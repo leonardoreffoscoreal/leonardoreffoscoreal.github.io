@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Leonardo Reffosco - Senior Data Engineer Portfolio. Built and maintained an 8-billion-row enterprise data platform with 1,300+ pipelines.">
+    <meta name="theme-color" content="#1a1a2e">
     <title>Leonardo Reffosco | Senior Data Engineer Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -25,11 +27,16 @@
             box-sizing: border-box;
         }
         
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--dark);
             color: #fff;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         /* Hero Section */
@@ -41,6 +48,7 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            padding-top: 80px;
         }
         
         .hero::before {
@@ -124,18 +132,18 @@
             top: 0;
             left: 0;
             right: 0;
-            padding: 20px 40px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(26, 26, 46, 0.9);
+            background: rgba(26, 26, 46, 0.95);
             backdrop-filter: blur(10px);
         }
         
         .nav-logo {
             font-weight: 700;
-            font-size: 1.2em;
+            font-size: 1.1em;
         }
         
         .nav-links {
@@ -148,10 +156,46 @@
             text-decoration: none;
             font-size: 0.9em;
             transition: color 0.3s;
+            padding: 5px 0;
         }
         
         .nav-links a:hover {
             color: #fff;
+        }
+        
+        /* Mobile Menu Button */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 110;
+        }
+        
+        .nav-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-toggle.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .nav-toggle.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
         }
         
         /* Sections */
@@ -552,14 +596,324 @@
             color: var(--gray);
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5em;
+        /* Responsive - Tablet */
+        @media (max-width: 1024px) {
+            .nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .section {
+                padding: 80px 20px;
             }
             
             .hero-stats {
-                gap: 30px;
+                gap: 40px;
+            }
+            
+            .patterns-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+        
+        /* Responsive - Mobile */
+        @media (max-width: 768px) {
+            /* Mobile Navigation */
+            .nav-toggle {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(22, 22, 42, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 25px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-links.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-links a {
+                font-size: 1.3em;
+                padding: 10px 20px;
+            }
+            
+            /* Hero Mobile */
+            .hero {
+                min-height: 100vh;
+                padding-top: 70px;
+            }
+            
+            .hero-content {
+                padding: 15px;
+            }
+            
+            .hero-badge {
+                font-size: 0.75em;
+                padding: 6px 14px;
+                margin-bottom: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2em;
+                margin-bottom: 15px;
+            }
+            
+            .hero-subtitle {
+                font-size: 1em;
+                margin-bottom: 30px;
+                line-height: 1.5;
+            }
+            
+            .hero-stats {
+                gap: 20px;
+                margin-top: 30px;
+            }
+            
+            .hero-stat {
+                flex: 0 0 calc(50% - 10px);
+            }
+            
+            .hero-stat-value {
+                font-size: 2.2em;
+            }
+            
+            .hero-stat-label {
+                font-size: 0.75em;
+                letter-spacing: 1px;
+            }
+            
+            /* Section Mobile */
+            .section {
+                padding: 60px 15px;
+            }
+            
+            .section-header {
+                margin-bottom: 40px;
+            }
+            
+            .section-label {
+                font-size: 0.8em;
+            }
+            
+            .section-title {
+                font-size: 1.7em;
+            }
+            
+            .section-description {
+                font-size: 0.95em;
+            }
+            
+            /* Impact Cards Mobile */
+            .impact-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .impact-card {
+                padding: 25px 20px;
+            }
+            
+            .impact-card-value {
+                font-size: 2em;
+            }
+            
+            .impact-card-icon {
+                font-size: 2em;
+            }
+            
+            /* Comparison Table Mobile */
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 10px;
+                font-size: 0.85em;
+                white-space: nowrap;
+            }
+            
+            /* Architecture Mobile */
+            .architecture-container {
+                padding: 25px 15px;
+            }
+            
+            .architecture-diagram {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .architecture-layer {
+                min-width: 100%;
+                padding: 20px 15px;
+            }
+            
+            .architecture-layer h4 {
+                font-size: 1em;
+            }
+            
+            .architecture-layer p {
+                font-size: 0.8em;
+            }
+            
+            .architecture-arrow {
+                transform: rotate(90deg);
+                font-size: 1.5em;
+            }
+            
+            /* Tech Grid Mobile */
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .tech-item {
+                padding: 18px 12px;
+            }
+            
+            .tech-item-icon {
+                font-size: 1.6em;
+            }
+            
+            .tech-item-name {
+                font-size: 0.9em;
+            }
+            
+            .tech-item-category {
+                font-size: 0.7em;
+            }
+            
+            /* Patterns Grid Mobile */
+            .patterns-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .pattern-card {
+                padding: 25px 20px;
+            }
+            
+            .pattern-card h3 {
+                font-size: 1.15em;
+            }
+            
+            .pattern-card p {
+                font-size: 0.9em;
+            }
+            
+            .pattern-card li {
+                font-size: 0.85em;
+                padding: 6px 0;
+                padding-left: 22px;
+            }
+            
+            /* Timeline Mobile */
+            .timeline::before {
+                left: 15px;
+            }
+            
+            .timeline-item {
+                margin-bottom: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 50px);
+                margin-left: 45px !important;
+                margin-right: 0 !important;
+                padding: 20px;
+            }
+            
+            .timeline-year {
+                left: 15px;
+                transform: translateX(0);
+                font-size: 0.75em;
+                padding: 6px 12px;
+            }
+            
+            .timeline-content h4 {
+                font-size: 1.05em;
+            }
+            
+            .timeline-content p {
+                font-size: 0.85em;
+            }
+            
+            /* Integrations Mobile */
+            .integrations-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            
+            .integration-item {
+                padding: 15px 8px;
+                font-size: 0.75em;
+            }
+            
+            .integration-icon {
+                font-size: 1.4em;
+                margin-bottom: 6px;
+            }
+            
+            /* CTA Section Mobile */
+            .cta-section {
+                padding: 50px 20px;
+                border-radius: 16px;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.7em;
+            }
+            
+            .cta-section p {
+                font-size: 0.95em;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .cta-btn {
+                width: 100%;
+                text-align: center;
+                padding: 14px 25px;
+            }
+            
+            /* Footer Mobile */
+            .footer {
+                padding: 40px 15px;
+            }
+            
+            .footer p {
+                font-size: 0.9em;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 375px) {
+            .hero h1 {
+                font-size: 1.9em;
+            }
+            
+            .hero-stat {
+                flex: 0 0 100%;
             }
             
             .hero-stat-value {
@@ -567,28 +921,15 @@
             }
             
             .section-title {
-                font-size: 2em;
+                font-size: 1.5em;
             }
             
-            .timeline::before {
-                left: 20px;
+            .integrations-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .timeline-content {
-                width: calc(100% - 60px);
-                margin-left: 50px !important;
-            }
-            
-            .timeline-year {
-                left: 20px;
-            }
-            
-            .architecture-diagram {
-                flex-direction: column;
-            }
-            
-            .architecture-arrow {
-                transform: rotate(90deg);
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
@@ -631,7 +972,12 @@
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-logo">Leonardo Reffosco</div>
-        <div class="nav-links">
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
             <a href="#impact">Impact</a>
             <a href="#architecture">Architecture</a>
             <a href="#patterns">Patterns</a>
@@ -1138,5 +1484,53 @@
         </p>
         <p style="margin-top: 20px; font-size: 0.8em; color: var(--gray);">💡 To export as PDF: Ctrl+P → "Save as PDF"</p>
     </footer>
+    
+    <!-- Mobile Navigation Script -->
+    <script>
+        // Mobile menu toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        navToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                navToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Smooth scroll for anchor links (fallback for older browsers)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
