@@ -39,6 +39,78 @@
             overflow-x: hidden;
         }
         
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: #fff;
+        }
+        
+        /* Mobile Menu Button */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 110;
+        }
+        
+        .nav-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-toggle.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .nav-toggle.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -124,78 +196,6 @@
             margin-top: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
-        }
-        
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
-        }
-        
-        .nav-logo {
-            font-weight: 700;
-            font-size: 1.1em;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .nav-links a {
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: color 0.3s;
-            padding: 5px 0;
-        }
-        
-        .nav-links a:hover {
-            color: #fff;
-        }
-        
-        /* Mobile Menu Button */
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 110;
-        }
-        
-        .nav-toggle span {
-            display: block;
-            width: 100%;
-            height: 2px;
-            background: #fff;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-toggle.active span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-        
-        .nav-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .nav-toggle.active span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
         }
         
         /* Sections */
@@ -632,11 +632,11 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(22, 22, 42, 0.98);
+                background: var(--darker);
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                gap: 25px;
+                gap: 6px;
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.3s ease;
@@ -648,8 +648,18 @@
             }
             
             .nav-links a {
-                font-size: 1.3em;
+                font-size: 0.95em;
+                font-weight: 500;
+                color: rgba(255, 255, 255, 0.9);
                 padding: 10px 20px;
+                border-radius: 6px;
+                transition: all 0.2s ease;
+            }
+            
+            .nav-links a:hover,
+            .nav-links a:active {
+                color: #fff;
+                background: rgba(0, 102, 255, 0.2);
             }
             
             /* Hero Mobile */
@@ -931,6 +941,11 @@
             .tech-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .nav-links a {
+                font-size: 0.9em;
+                padding: 8px 16px;
+            }
         }
         
         /* Print */
@@ -964,6 +979,10 @@
             .cta-section {
                 background: #f5f7fa;
                 color: #000;
+            }
+            
+            .nav {
+                display: none;
             }
         }
     </style>
@@ -1482,12 +1501,11 @@
         <p style="margin-top: 15px;">
             <a href="https://www.linkedin.com/in/leonardo-reffosco-67404331/" target="_blank" style="color: var(--primary); text-decoration: none;">LinkedIn Profile →</a>
         </p>
-        <p style="margin-top: 20px; font-size: 0.8em; color: var(--gray);">💡 To export as PDF: Ctrl+P → "Save as PDF"</p>
+        <p style="margin-top: 20px; font-size: 0.8em; color: var(--gray);">💡</p>
     </footer>
     
     <!-- Mobile Navigation Script -->
     <script>
-        // Mobile menu toggle
         const navToggle = document.getElementById('navToggle');
         const navLinks = document.getElementById('navLinks');
         
@@ -1497,7 +1515,6 @@
             document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
         });
         
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 navToggle.classList.remove('active');
@@ -1506,30 +1523,12 @@
             });
         });
         
-        // Close menu when pressing Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && navLinks.classList.contains('active')) {
                 navToggle.classList.remove('active');
                 navLinks.classList.remove('active');
                 document.body.style.overflow = '';
             }
-        });
-        
-        // Smooth scroll for anchor links (fallback for older browsers)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                }
-            });
         });
     </script>
 </body>
