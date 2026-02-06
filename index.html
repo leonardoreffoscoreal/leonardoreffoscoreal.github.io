@@ -3,1045 +3,1018 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Leonardo Reffosco - Senior Data Engineer Portfolio. Built and maintained an 8-billion-row enterprise data platform with 1,300+ pipelines.">
-    <meta name="theme-color" content="#1a1a2e">
-    <title>Leonardo Reffosco | Senior Data Engineer Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Leonardo Reffosco | Senior Data Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0066FF;
-            --primary-dark: #0052CC;
-            --secondary: #00C853;
-            --accent: #FF6B35;
-            --dark: #1a1a2e;
-            --darker: #16162a;
-            --light: #f5f7fa;
-            --gray: #6b7280;
-            --success: #10b981;
-            --warning: #f59e0b;
+            --primary: #4F8EFF;
+            --primary-glow: rgba(79, 142, 255, 0.35);
+            --accent: #00E5A0;
+            --accent-glow: rgba(0, 229, 160, 0.25);
+            --surface: #0D1117;
+            --surface-2: #161B22;
+            --surface-3: #1C2333;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(79, 142, 255, 0.3);
+            --text: #E6EDF3;
+            --text-muted: #7D8590;
+            --text-faint: #484F58;
+            --radius: 16px;
+            --radius-sm: 10px;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         html {
             scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--surface-3) var(--surface);
         }
-        
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark);
-            color: #fff;
-            line-height: 1.6;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--surface);
+            color: var(--text);
+            line-height: 1.7;
             overflow-x: hidden;
         }
-        
-        /* Navigation */
+
+        /* ─── Reveal Animation System ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+
+        /* ─── Navigation ─── */
         .nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            padding: 15px 20px;
+            padding: 0 48px;
+            height: 72px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 17, 23, 0.7);
+            backdrop-filter: blur(20px) saturate(1.5);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s ease;
         }
-        
+
+        .nav.scrolled {
+            background: rgba(13, 17, 23, 0.92);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
         .nav-logo {
+            font-family: 'Syne', sans-serif;
             font-weight: 700;
-            font-size: 1.1em;
+            font-size: 1.15em;
+            letter-spacing: -0.02em;
+            color: var(--text);
         }
-        
+
+        .nav-logo span {
+            color: var(--primary);
+        }
+
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 8px;
         }
-        
+
         .nav-links a {
-            color: var(--gray);
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.9em;
-            transition: color 0.3s;
-            padding: 5px 0;
+            font-size: 0.85em;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.25s;
+            letter-spacing: 0.01em;
         }
-        
+
         .nav-links a:hover {
-            color: #fff;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
         }
-        
-        /* Mobile Menu Button */
-        .nav-toggle {
+
+        .nav-hamburger {
             display: none;
             flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: transparent;
-            border: none;
+            gap: 5px;
             cursor: pointer;
-            padding: 0;
-            z-index: 110;
+            padding: 8px;
         }
-        
-        .nav-toggle span {
-            display: block;
-            width: 100%;
+
+        .nav-hamburger span {
+            width: 22px;
             height: 2px;
-            background: #fff;
+            background: var(--text);
             border-radius: 2px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-        
-        .nav-toggle.active span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-        
-        .nav-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .nav-toggle.active span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
-        
-        /* Hero Section */
+
+        /* ─── Hero ─── */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e3a5f 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
-            padding-top: 80px;
+            padding: 120px 24px 80px;
         }
-        
-        .hero::before {
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230066FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
+            top: -20%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float-orb 12s ease-in-out infinite;
         }
-        
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -15%;
+            right: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float-orb 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(60px, -40px) scale(1.05); }
+            66% { transform: translate(-30px, 30px) scale(0.95); }
+        }
+
+        .hero-grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(79, 142, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(79, 142, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+        }
+
         .hero-content {
             text-align: center;
             z-index: 1;
-            padding: 20px;
-            max-width: 900px;
+            max-width: 880px;
         }
-        
+
         .hero-badge {
-            display: inline-block;
-            background: rgba(0, 102, 255, 0.2);
-            border: 1px solid var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(79, 142, 255, 0.08);
+            border: 1px solid rgba(79, 142, 255, 0.2);
             padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9em;
-            font-weight: 500;
+            border-radius: 100px;
+            font-size: 0.8em;
+            font-weight: 600;
             color: var(--primary);
-            margin-bottom: 30px;
-            letter-spacing: 1px;
+            margin-bottom: 32px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            animation: fadeInDown 0.8s 0.2s both;
         }
-        
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .hero h1 {
-            font-size: 4em;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.8em, 6vw, 5em);
             font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            line-height: 1.05;
+            margin-bottom: 24px;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.8s 0.4s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 50%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .hero-subtitle {
-            font-size: 1.5em;
-            color: var(--gray);
-            margin-bottom: 40px;
-            font-weight: 300;
+            font-size: 1.15em;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            font-weight: 400;
+            animation: fadeInUp 0.8s 0.6s both;
         }
-        
+
+        .hero-subtitle strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            flex-wrap: wrap;
-            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            animation: fadeInUp 0.8s 0.8s both;
         }
-        
+
         .hero-stat {
+            background: var(--surface-2);
+            padding: 32px 20px;
             text-align: center;
+            transition: background 0.3s;
         }
-        
+
+        .hero-stat:hover {
+            background: var(--surface-3);
+        }
+
         .hero-stat-value {
-            font-size: 3.5em;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2em, 4vw, 3em);
             font-weight: 800;
-            color: var(--primary);
+            color: var(--text);
             line-height: 1;
+            margin-bottom: 8px;
         }
-        
+
+        .hero-stat-value .counter-suffix {
+            color: var(--primary);
+        }
+
         .hero-stat-label {
-            font-size: 0.95em;
-            color: var(--gray);
-            margin-top: 10px;
+            font-size: 0.78em;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 0.1em;
+            font-weight: 500;
         }
-        
-        /* Sections */
+
+        /* ─── Sections ─── */
         .section {
-            padding: 100px 20px;
+            padding: 120px 24px;
             max-width: 1200px;
             margin: 0 auto;
         }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-label {
-            color: var(--primary);
-            font-size: 0.9em;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-        
-        .section-title {
-            font-size: 2.8em;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        .section-description {
-            color: var(--gray);
-            font-size: 1.1em;
-            max-width: 700px;
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+            max-width: 1200px;
             margin: 0 auto;
         }
-        
-        /* Impact Cards */
-        .impact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
+
+        .section-header {
+            margin-bottom: 64px;
         }
-        
-        .impact-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 35px;
-            transition: all 0.3s ease;
-        }
-        
-        .impact-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            background: rgba(0, 102, 255, 0.05);
-        }
-        
-        .impact-card-icon {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        
-        .impact-card-value {
-            font-size: 2.5em;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        
-        .impact-card-label {
-            color: var(--gray);
-            font-size: 0.95em;
-        }
-        
-        .impact-card-detail {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.85em;
-            color: var(--success);
-        }
-        
-        /* Architecture Section */
-        .architecture-container {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 50px;
-            margin-top: 40px;
-        }
-        
-        .architecture-diagram {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .architecture-layer {
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-            padding: 30px 20px;
-            background: rgba(0, 102, 255, 0.1);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 102, 255, 0.3);
-        }
-        
-        .architecture-layer h4 {
-            font-size: 1.1em;
-            margin-bottom: 10px;
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
             color: var(--primary);
-        }
-        
-        .architecture-layer p {
-            font-size: 0.85em;
-            color: var(--gray);
-        }
-        
-        .architecture-arrow {
-            font-size: 2em;
-            color: var(--primary);
-        }
-        
-        /* Tech Stack */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-        
-        .tech-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .tech-item:hover {
-            border-color: var(--primary);
-            transform: scale(1.05);
-        }
-        
-        .tech-item-icon {
-            font-size: 2em;
-            margin-bottom: 12px;
-        }
-        
-        .tech-item-name {
+            font-size: 0.78em;
             font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .tech-item-category {
-            font-size: 0.8em;
-            color: var(--gray);
-        }
-        
-        /* Patterns Section */
-        .patterns-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .pattern-card {
-            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(0, 102, 255, 0.02) 100%);
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            border-radius: 16px;
-            padding: 35px;
-        }
-        
-        .pattern-card h3 {
-            font-size: 1.3em;
-            margin-bottom: 15px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        
-        .pattern-card p {
-            color: var(--gray);
-            font-size: 0.95em;
-            margin-bottom: 20px;
+
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 1px;
         }
-        
-        .pattern-card ul {
-            list-style: none;
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2em, 4vw, 2.8em);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.15;
         }
-        
-        .pattern-card li {
-            padding: 8px 0;
-            padding-left: 25px;
+
+        .section-description {
+            color: var(--text-muted);
+            font-size: 1.05em;
+            max-width: 560px;
+        }
+
+        /* ─── Impact Cards ─── */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2px;
+            background: var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .impact-card {
+            background: var(--surface-2);
+            padding: 36px 28px;
+            transition: all 0.35s ease;
             position: relative;
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.8);
         }
-        
+
+        .impact-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(79, 142, 255, 0.06) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+
+        .impact-card:hover::after { opacity: 1; }
+        .impact-card:hover { background: var(--surface-3); }
+
+        .impact-card-icon {
+            font-size: 1.5em;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .impact-card-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.2em;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 4px;
+            line-height: 1.1;
+        }
+
+        .impact-card-label {
+            color: var(--text-muted);
+            font-size: 0.88em;
+            font-weight: 500;
+        }
+
+        .impact-card-detail {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75em;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        /* ─── Comparison Table ─── */
+        .table-wrapper {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-top: 56px;
+        }
+
+        .table-wrapper h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1em;
+            font-weight: 600;
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 18px 28px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            color: var(--text-faint);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 0.72em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table td {
+            font-size: 0.95em;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .comparison-table tr:last-child td { border-bottom: none; }
+
+        .comparison-table tr:hover td {
+            background: rgba(79, 142, 255, 0.03);
+        }
+
+        .highlight-cell {
+            color: var(--accent) !important;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ─── Architecture ─── */
+        .architecture-container {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+        }
+
+        .architecture-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            position: relative;
+        }
+
+        .architecture-flow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .arch-layer {
+            text-align: center;
+            padding: 28px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .arch-layer:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(79, 142, 255, 0.1);
+        }
+
+        .arch-layer-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65em;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .arch-layer h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .arch-layer p {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ─── Tech Grid ─── */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 48px;
+        }
+
+        .tech-item {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 24px 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .tech-item:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(79, 142, 255, 0.08);
+        }
+
+        .tech-item-icon { font-size: 1.8em; margin-bottom: 12px; }
+
+        .tech-item-name {
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+        }
+
+        .tech-item-category {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68em;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* ─── Patterns ─── */
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 16px;
+        }
+
+        .pattern-card {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .pattern-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .pattern-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pattern-card p {
+            color: var(--text-muted);
+            font-size: 0.88em;
+            margin-bottom: 20px;
+            line-height: 1.65;
+        }
+
+        .pattern-card ul { list-style: none; }
+
+        .pattern-card li {
+            padding: 6px 0 6px 20px;
+            position: relative;
+            font-size: 0.84em;
+            color: var(--text-muted);
+        }
+
         .pattern-card li::before {
-            content: '→';
+            content: '›';
             position: absolute;
             left: 0;
             color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1em;
         }
-        
-        /* Timeline */
+
+        /* ─── Integrations ─── */
+        .integrations-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .integration-item {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 10px 20px;
+            font-size: 0.84em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+
+        .integration-item:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-3);
+            transform: translateY(-2px);
+        }
+
+        .integration-icon { font-size: 1.1em; }
+
+        /* ─── Timeline ─── */
         .timeline {
             position: relative;
-            margin-top: 50px;
+            margin-top: 56px;
+            padding-left: 40px;
         }
-        
+
         .timeline::before {
             content: '';
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 8px;
+            top: 0;
+            bottom: 0;
             width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), transparent);
+            background: linear-gradient(to bottom, var(--primary), var(--accent), transparent);
+            border-radius: 1px;
         }
-        
+
         .timeline-item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             position: relative;
         }
-        
-        .timeline-content {
-            width: 45%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 30px;
-        }
-        
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-right: auto;
-            margin-left: 0;
-        }
-        
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-left: auto;
-            margin-right: 0;
-        }
-        
-        .timeline-year {
+
+        .timeline-item::before {
+            content: '';
             position: absolute;
+            left: -36px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            z-index: 1;
+        }
+
+        .timeline-item:last-child::before {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .timeline-year {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.15em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
+        /* ─── Skills Grid ─── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2px;
+            background: var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .skill-card {
+            background: var(--surface-2);
+            padding: 28px 24px;
+            transition: background 0.3s;
+        }
+
+        .skill-card:hover { background: var(--surface-3); }
+
+        .skill-card-icon {
+            font-size: 1.4em;
+            margin-bottom: 14px;
+        }
+
+        .skill-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .skill-card p {
+            font-size: 0.82em;
+            color: var(--text-muted);
+        }
+
+        /* ─── CTA ─── */
+        .cta-section {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 80px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--primary);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9em;
+            width: 500px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            pointer-events: none;
         }
-        
-        .timeline-content h4 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-        
-        .timeline-content p {
-            color: var(--gray);
-            font-size: 0.9em;
-        }
-        
-        /* Integrations */
-        .integrations-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-top: 40px;
-        }
-        
-        .integration-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 20px 15px;
-            text-align: center;
-            font-size: 0.85em;
-            transition: all 0.3s;
-        }
-        
-        .integration-item:hover {
-            border-color: var(--primary);
-            background: rgba(0, 102, 255, 0.1);
-        }
-        
-        .integration-icon {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-        }
-        
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            margin-top: 40px;
-            border-collapse: collapse;
-        }
-        
-        .comparison-table th,
-        .comparison-table td {
-            padding: 20px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        
-        .comparison-table th {
-            color: var(--gray);
-            font-weight: 500;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .comparison-table td {
-            font-size: 1.1em;
-        }
-        
-        .comparison-table tr:hover {
-            background: rgba(0, 102, 255, 0.05);
-        }
-        
-        .highlight-cell {
-            color: var(--success);
-            font-weight: 600;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-            border-radius: 24px;
-            padding: 80px 40px;
-            text-align: center;
-            margin-top: 60px;
-        }
-        
+
         .cta-section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8em, 3.5vw, 2.5em);
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            position: relative;
         }
-        
+
         .cta-section p {
-            font-size: 1.1em;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            max-width: 600px;
+            font-size: 1em;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            max-width: 520px;
             margin-left: auto;
             margin-right: auto;
+            position: relative;
         }
-        
+
         .cta-buttons {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
+            position: relative;
         }
-        
+
         .cta-btn {
-            padding: 15px 35px;
-            border-radius: 50px;
+            padding: 14px 32px;
+            border-radius: 100px;
             font-weight: 600;
+            font-size: 0.9em;
             text-decoration: none;
             transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        
+
         .cta-btn-primary {
-            background: #fff;
-            color: var(--primary);
+            background: var(--primary);
+            color: #fff;
         }
-        
+
+        .cta-btn-primary:hover {
+            background: #6BA1FF;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--primary-glow);
+        }
+
         .cta-btn-secondary {
             background: transparent;
-            color: #fff;
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
-        
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+        .cta-btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
         }
-        
-        /* Footer */
+
+        /* ─── Footer ─── */
         .footer {
             text-align: center;
-            padding: 50px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--gray);
+            padding: 48px 24px;
+            border-top: 1px solid var(--border);
         }
-        
-        /* Responsive - Tablet */
-        @media (max-width: 1024px) {
-            .nav {
-                padding: 15px 20px;
-            }
-            
-            .nav-links {
-                gap: 20px;
-            }
-            
-            .section {
-                padding: 80px 20px;
-            }
-            
-            .hero-stats {
-                gap: 40px;
-            }
-            
-            .patterns-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
+
+        .footer-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.95em;
         }
-        
-        /* Responsive - Mobile */
-        @media (max-width: 768px) {
-            /* Mobile Navigation */
-            .nav-toggle {
+
+        .footer-info {
+            margin-top: 8px;
+            font-size: 0.82em;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.84em;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 860px) {
+            .nav { padding: 0 20px; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+
+            .nav-links.open {
                 display: flex;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 0;
+                flex-direction: column;
+                position: absolute;
+                top: 72px;
                 left: 0;
                 right: 0;
-                bottom: 0;
-                background: var(--darker);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 6px;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
+                background: rgba(13, 17, 23, 0.97);
+                backdrop-filter: blur(20px);
+                padding: 16px 20px;
+                border-bottom: 1px solid var(--border);
+                gap: 4px;
             }
-            
-            .nav-links.active {
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .nav-links a {
-                font-size: 0.95em;
-                font-weight: 500;
-                color: rgba(255, 255, 255, 0.9);
-                padding: 10px 20px;
-                border-radius: 6px;
-                transition: all 0.2s ease;
-            }
-            
-            .nav-links a:hover,
-            .nav-links a:active {
-                color: #fff;
-                background: rgba(0, 102, 255, 0.2);
-            }
-            
-            /* Hero Mobile */
-            .hero {
-                min-height: 100vh;
-                padding-top: 70px;
-            }
-            
-            .hero-content {
-                padding: 15px;
-            }
-            
-            .hero-badge {
-                font-size: 0.75em;
-                padding: 6px 14px;
-                margin-bottom: 20px;
-            }
-            
-            .hero h1 {
-                font-size: 2.2em;
-                margin-bottom: 15px;
-            }
-            
-            .hero-subtitle {
-                font-size: 1em;
-                margin-bottom: 30px;
-                line-height: 1.5;
-            }
-            
+
             .hero-stats {
-                gap: 20px;
-                margin-top: 30px;
-            }
-            
-            .hero-stat {
-                flex: 0 0 calc(50% - 10px);
-            }
-            
-            .hero-stat-value {
-                font-size: 2.2em;
-            }
-            
-            .hero-stat-label {
-                font-size: 0.75em;
-                letter-spacing: 1px;
-            }
-            
-            /* Section Mobile */
-            .section {
-                padding: 60px 15px;
-            }
-            
-            .section-header {
-                margin-bottom: 40px;
-            }
-            
-            .section-label {
-                font-size: 0.8em;
-            }
-            
-            .section-title {
-                font-size: 1.7em;
-            }
-            
-            .section-description {
-                font-size: 0.95em;
-            }
-            
-            /* Impact Cards Mobile */
-            .impact-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .impact-card {
-                padding: 25px 20px;
-            }
-            
-            .impact-card-value {
-                font-size: 2em;
-            }
-            
-            .impact-card-icon {
-                font-size: 2em;
-            }
-            
-            /* Comparison Table Mobile */
-            .comparison-table {
-                display: block;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .comparison-table th,
-            .comparison-table td {
-                padding: 12px 10px;
-                font-size: 0.85em;
-                white-space: nowrap;
-            }
-            
-            /* Architecture Mobile */
-            .architecture-container {
-                padding: 25px 15px;
-            }
-            
-            .architecture-diagram {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .architecture-layer {
-                min-width: 100%;
-                padding: 20px 15px;
-            }
-            
-            .architecture-layer h4 {
-                font-size: 1em;
-            }
-            
-            .architecture-layer p {
-                font-size: 0.8em;
-            }
-            
-            .architecture-arrow {
-                transform: rotate(90deg);
-                font-size: 1.5em;
-            }
-            
-            /* Tech Grid Mobile */
-            .tech-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
             }
-            
-            .tech-item {
-                padding: 18px 12px;
+
+            .section { padding: 80px 20px; }
+
+            .architecture-flow {
+                grid-template-columns: 1fr 1fr;
             }
-            
-            .tech-item-icon {
-                font-size: 1.6em;
-            }
-            
-            .tech-item-name {
-                font-size: 0.9em;
-            }
-            
-            .tech-item-category {
-                font-size: 0.7em;
-            }
-            
-            /* Patterns Grid Mobile */
+
+            .architecture-flow::before { display: none; }
+
             .patterns-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
-            
-            .pattern-card {
-                padding: 25px 20px;
-            }
-            
-            .pattern-card h3 {
-                font-size: 1.15em;
-            }
-            
-            .pattern-card p {
-                font-size: 0.9em;
-            }
-            
-            .pattern-card li {
-                font-size: 0.85em;
-                padding: 6px 0;
-                padding-left: 22px;
-            }
-            
-            /* Timeline Mobile */
-            .timeline::before {
-                left: 15px;
-            }
-            
-            .timeline-item {
-                margin-bottom: 30px;
-            }
-            
-            .timeline-content {
-                width: calc(100% - 50px);
-                margin-left: 45px !important;
-                margin-right: 0 !important;
-                padding: 20px;
-            }
-            
-            .timeline-year {
-                left: 15px;
-                transform: translateX(0);
-                font-size: 0.75em;
-                padding: 6px 12px;
-            }
-            
-            .timeline-content h4 {
-                font-size: 1.05em;
-            }
-            
-            .timeline-content p {
-                font-size: 0.85em;
-            }
-            
-            /* Integrations Mobile */
-            .integrations-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-            
-            .integration-item {
-                padding: 15px 8px;
-                font-size: 0.75em;
-            }
-            
-            .integration-icon {
-                font-size: 1.4em;
-                margin-bottom: 6px;
-            }
-            
-            /* CTA Section Mobile */
-            .cta-section {
-                padding: 50px 20px;
-                border-radius: 16px;
-            }
-            
-            .cta-section h2 {
-                font-size: 1.7em;
-            }
-            
-            .cta-section p {
-                font-size: 0.95em;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                gap: 12px;
-            }
-            
-            .cta-btn {
-                width: 100%;
-                text-align: center;
-                padding: 14px 25px;
-            }
-            
-            /* Footer Mobile */
-            .footer {
-                padding: 40px 15px;
-            }
-            
-            .footer p {
-                font-size: 0.9em;
-            }
+
+            .cta-section { padding: 56px 24px; }
         }
-        
-        /* Extra small devices */
-        @media (max-width: 375px) {
-            .hero h1 {
-                font-size: 1.9em;
-            }
-            
-            .hero-stat {
-                flex: 0 0 100%;
-            }
-            
-            .hero-stat-value {
-                font-size: 2.5em;
-            }
-            
-            .section-title {
-                font-size: 1.5em;
-            }
-            
-            .integrations-grid {
+
+        @media (max-width: 520px) {
+            .hero-stats {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .tech-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .nav-links a {
-                font-size: 0.9em;
-                padding: 8px 16px;
+
+            .architecture-flow {
+                grid-template-columns: 1fr;
             }
         }
-        
-        /* Print */
+
+        /* ─── Print ─── */
         @media print {
-            body {
-                background: #fff;
-                color: #000;
-            }
-            
-            .hero {
-                min-height: auto;
-                padding: 50px 20px;
-                background: #f5f7fa;
-            }
-            
-            .hero h1 {
+            body { background: #fff; color: #000; }
+            .nav, .hero-bg, .hero-grid-overlay { display: none; }
+            .hero { min-height: auto; padding: 40px 20px; }
+            .hero h1 .gradient-text {
                 background: none;
                 -webkit-text-fill-color: #000;
-                color: #000;
             }
-            
-            .section {
-                padding: 40px 20px;
-            }
-            
-            .impact-card, .pattern-card, .tech-item {
+            .section { padding: 32px 20px; }
+            .reveal { opacity: 1 !important; transform: none !important; }
+            .impact-card, .pattern-card, .tech-item, .arch-layer, .cta-section {
                 border: 1px solid #ddd;
-                background: #f9f9f9;
-            }
-            
-            .cta-section {
-                background: #f5f7fa;
-                color: #000;
-            }
-            
-            .nav {
-                display: none;
+                background: #fafafa;
             }
         }
     </style>
 </head>
 <body>
+
     <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-logo">Leonardo Reffosco</div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+    <nav class="nav" id="nav">
+        <div class="nav-logo">LR<span>.</span></div>
         <div class="nav-links" id="navLinks">
             <a href="#impact">Impact</a>
             <a href="#architecture">Architecture</a>
             <a href="#patterns">Patterns</a>
+            <a href="#integrations">Integrations</a>
             <a href="#journey">Journey</a>
             <a href="#contact">Contact</a>
         </div>
+        <div class="nav-hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
     </nav>
-    
-    <!-- Hero Section -->
+
+    <!-- Hero -->
     <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid-overlay"></div>
         <div class="hero-content">
-            <div class="hero-badge">🏆 SOLO ENGINEER PROJECT • 2021-Present</div>
-            <h1>Leonardo Reffosco</h1>
-            <p class="hero-subtitle">Senior Data Engineer<br>Built and maintained an 8-billion-row enterprise data platform<br>with 1,300+ pipelines as a single engineer</p>
-            
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                Solo Engineer · Enterprise-Scale · 2021–Present
+            </div>
+            <h1><span class="gradient-text">Leonardo Reffosco</span></h1>
+            <p class="hero-subtitle">
+                Senior Data Engineer who built and maintains an <strong>8-billion-row data platform</strong> with <strong>1,300+ pipelines</strong> — as a single engineer.
+            </p>
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <div class="hero-stat-value">8B+</div>
+                    <div class="hero-stat-value"><span class="counter" data-target="8">0</span><span class="counter-suffix">B+</span></div>
                     <div class="hero-stat-label">Rows Managed</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="hero-stat-value">1,300+</div>
+                    <div class="hero-stat-value"><span class="counter" data-target="1300">0</span><span class="counter-suffix">+</span></div>
                     <div class="hero-stat-label">Pipelines Built</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="hero-stat-value">25+</div>
+                    <div class="hero-stat-value"><span class="counter" data-target="25">0</span><span class="counter-suffix">+</span></div>
                     <div class="hero-stat-label">Data Sources</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="hero-stat-value">1</div>
+                    <div class="hero-stat-value"><span class="counter" data-target="1">0</span></div>
                     <div class="hero-stat-label">Engineer</div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Impact Section -->
+
+    <div class="section-divider"></div>
+
+    <!-- Impact -->
     <section class="section" id="impact">
-        <div class="section-header">
+        <div class="section-header reveal">
             <div class="section-label">Business Impact</div>
-            <h2 class="section-title">Delivering Enterprise-Scale Results</h2>
-            <p class="section-description">Built and operated a production data platform for a Global SaaS/EdTech company<br>that would typically require a team of 4-6 senior engineers</p>
+            <h2 class="section-title">Enterprise-Scale Results,<br>Solo Delivery</h2>
+            <p class="section-description">Built and operated a production data platform for a global SaaS/EdTech company — work that would typically require a team of 4–6 senior engineers.</p>
         </div>
-        
-        <div class="impact-grid">
+
+        <div class="impact-grid reveal">
             <div class="impact-card">
                 <div class="impact-card-icon">🔄</div>
                 <div class="impact-card-value">1,148</div>
@@ -1079,86 +1052,88 @@
                 <div class="impact-card-detail">✓ CRM, HR, Finance, Product</div>
             </div>
         </div>
-        
-        <!-- Comparison Table -->
-        <h3 style="margin-top: 60px; margin-bottom: 20px; text-align: center; color: var(--gray);">Industry Benchmark Comparison</h3>
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>Industry Standard (Team of 5)</th>
-                    <th>This Project (1 Engineer)</th>
-                    <th>Multiplier</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Pipelines Built</td>
-                    <td>300-500</td>
-                    <td class="highlight-cell">1,300+</td>
-                    <td class="highlight-cell">3-4x</td>
-                </tr>
-                <tr>
-                    <td>Data Volume</td>
-                    <td>500M - 1B rows</td>
-                    <td class="highlight-cell">8B+ rows</td>
-                    <td class="highlight-cell">8-16x</td>
-                </tr>
-                <tr>
-                    <td>Data Sources</td>
-                    <td>8-12</td>
-                    <td class="highlight-cell">25+</td>
-                    <td class="highlight-cell">2x</td>
-                </tr>
-                <tr>
-                    <td>Typical Timeline</td>
-                    <td>2-3 years</td>
-                    <td class="highlight-cell">Built solo</td>
-                    <td class="highlight-cell">-</td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div class="table-wrapper reveal">
+            <h3>Industry Benchmark Comparison</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Industry Standard (Team of 5)</th>
+                        <th>This Project (1 Engineer)</th>
+                        <th>Multiplier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pipelines Built</td>
+                        <td>300–500</td>
+                        <td class="highlight-cell">1,300+</td>
+                        <td class="highlight-cell">3–4×</td>
+                    </tr>
+                    <tr>
+                        <td>Data Volume</td>
+                        <td>500M – 1B rows</td>
+                        <td class="highlight-cell">8B+ rows</td>
+                        <td class="highlight-cell">8–16×</td>
+                    </tr>
+                    <tr>
+                        <td>Data Sources</td>
+                        <td>8–12</td>
+                        <td class="highlight-cell">25+</td>
+                        <td class="highlight-cell">2×</td>
+                    </tr>
+                    <tr>
+                        <td>Typical Timeline</td>
+                        <td>2–3 years</td>
+                        <td class="highlight-cell">Built solo</td>
+                        <td class="highlight-cell">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
-    
-    <!-- Architecture Section -->
+
+    <div class="section-divider"></div>
+
+    <!-- Architecture -->
     <section class="section" id="architecture">
-        <div class="section-header">
+        <div class="section-header reveal">
             <div class="section-label">Technical Architecture</div>
             <h2 class="section-title">Medallion Lakehouse Pattern</h2>
-            <p class="section-description">Implemented industry-standard medallion architecture with custom enhancements for enterprise requirements</p>
+            <p class="section-description">Industry-standard medallion architecture with custom enhancements for enterprise-grade reliability.</p>
         </div>
-        
-        <div class="architecture-container">
-            <div class="architecture-diagram">
-                <div class="architecture-layer">
-                    <h4>🥉 STGNP (Bronze)</h4>
-                    <p>Raw data landing zone<br>Timestamped snapshots<br>Schema-on-read</p>
+
+        <div class="architecture-container reveal">
+            <div class="architecture-flow">
+                <div class="arch-layer">
+                    <span class="arch-layer-badge">Bronze</span>
+                    <h4>🥉 STGNP</h4>
+                    <p>Raw data landing zone, timestamped snapshots, schema-on-read</p>
                 </div>
-                <div class="architecture-arrow">→</div>
-                <div class="architecture-layer">
-                    <h4>🥈 STGCRD (Silver)</h4>
-                    <p>Cleansed & validated<br>Business rules applied<br>Deduplication</p>
+                <div class="arch-layer">
+                    <span class="arch-layer-badge">Silver</span>
+                    <h4>🥈 STGCRD</h4>
+                    <p>Cleansed & validated, business rules applied, deduplication</p>
                 </div>
-                <div class="architecture-arrow">→</div>
-                <div class="architecture-layer">
-                    <h4>🥇 DWH (Gold)</h4>
-                    <p>Business-ready data<br>SCD Type 2 history<br>Analytics optimized</p>
+                <div class="arch-layer">
+                    <span class="arch-layer-badge">Gold</span>
+                    <h4>🥇 DWH</h4>
+                    <p>Business-ready data, SCD Type 2 history, analytics optimized</p>
                 </div>
-                <div class="architecture-arrow">→</div>
-                <div class="architecture-layer">
-                    <h4>📊 ANALYTICS</h4>
-                    <p>Presentation layer<br>Aggregated views<br>BI-ready datasets</p>
+                <div class="arch-layer">
+                    <span class="arch-layer-badge">Presentation</span>
+                    <h4>📊 Analytics</h4>
+                    <p>Aggregated views, BI-ready datasets, semantic layer</p>
                 </div>
             </div>
         </div>
-        
-        <!-- Tech Stack -->
-        <h3 style="margin-top: 60px; margin-bottom: 10px; text-align: center;">Technology Stack</h3>
-        <div class="tech-grid">
+
+        <div class="tech-grid reveal">
             <div class="tech-item">
                 <div class="tech-item-icon">❄️</div>
                 <div class="tech-item-name">Snowflake</div>
-                <div class="tech-item-category">Data Warehouse</div>
+                <div class="tech-item-category">Warehouse</div>
             </div>
             <div class="tech-item">
                 <div class="tech-item-icon">🔷</div>
@@ -1168,7 +1143,7 @@
             <div class="tech-item">
                 <div class="tech-item-icon">🔶</div>
                 <div class="tech-item-name">dbt</div>
-                <div class="tech-item-category">Transformation</div>
+                <div class="tech-item-category">Transform</div>
             </div>
             <div class="tech-item">
                 <div class="tech-item-icon">📈</div>
@@ -1183,7 +1158,7 @@
             <div class="tech-item">
                 <div class="tech-item-icon">🗃️</div>
                 <div class="tech-item-name">SQL</div>
-                <div class="tech-item-category">Query Language</div>
+                <div class="tech-item-category">Query Lang</div>
             </div>
             <div class="tech-item">
                 <div class="tech-item-icon">📦</div>
@@ -1193,45 +1168,43 @@
             <div class="tech-item">
                 <div class="tech-item-icon">🔄</div>
                 <div class="tech-item-name">Git</div>
-                <div class="tech-item-category">Version Control</div>
+                <div class="tech-item-category">Version Ctrl</div>
             </div>
         </div>
     </section>
-    
-    <!-- Patterns Section -->
+
+    <div class="section-divider"></div>
+
+    <!-- Patterns -->
     <section class="section" id="patterns">
-        <div class="section-header">
+        <div class="section-header reveal">
             <div class="section-label">Engineering Patterns</div>
             <h2 class="section-title">Reusable Framework Design</h2>
-            <p class="section-description">Developed production-grade patterns that enable rapid integration of new data sources</p>
+            <p class="section-description">Production-grade patterns that enable rapid integration of new data sources with minimal ramp-up.</p>
         </div>
-        
+
         <div class="patterns-grid">
-            <div class="pattern-card">
+            <div class="pattern-card reveal reveal-delay-1">
                 <h3>🔄 Process Container</h3>
                 <p>Standardized execution wrapper providing observability, error handling, and lifecycle management for all pipelines.</p>
                 <ul>
                     <li>Automatic process ID generation</li>
                     <li>Start/end timestamp tracking</li>
-                    <li>Error message capture</li>
-                    <li>Result status management</li>
+                    <li>Error message capture & status mgmt</li>
                     <li>1.8M+ execution logs stored</li>
                 </ul>
             </div>
-            
-            <div class="pattern-card">
+            <div class="pattern-card reveal reveal-delay-2">
                 <h3>⏱️ Watermark Extraction</h3>
                 <p>Incremental loading pattern using high-water marks to minimize data transfer and processing time.</p>
                 <ul>
                     <li>Delta extraction by timestamp</li>
-                    <li>Last evaluated batch tracking</li>
-                    <li>Configurable per data source</li>
                     <li>Automatic checkpoint management</li>
+                    <li>Configurable per data source</li>
                     <li>Recovery and replay support</li>
                 </ul>
             </div>
-            
-            <div class="pattern-card">
+            <div class="pattern-card reveal reveal-delay-3">
                 <h3>📜 SCD Type 2 History</h3>
                 <p>Slowly Changing Dimension implementation preserving full historical record of data changes.</p>
                 <ul>
@@ -1239,297 +1212,244 @@
                     <li>Valid from/to timestamps</li>
                     <li>Current record flagging</li>
                     <li>Configurable business keys</li>
-                    <li>Soft delete tracking</li>
                 </ul>
             </div>
-            
-            <div class="pattern-card">
+            <div class="pattern-card reveal reveal-delay-1">
                 <h3>🗑️ Hard Deletion Tracking</h3>
-                <p>Custom pattern for tracking records deleted at source - critical for compliance and audit.</p>
+                <p>Custom pattern for tracking records deleted at source — critical for compliance and audit.</p>
                 <ul>
                     <li>Source system comparison</li>
                     <li>Deletion timestamp capture</li>
                     <li>Full audit trail</li>
-                    <li>Configurable retention</li>
                     <li>Regulatory compliance ready</li>
                 </ul>
             </div>
-            
-            <div class="pattern-card">
-                <h3>⚙️ Configuration-Driven DDL</h3>
-                <p>Metadata-driven table creation enabling rapid deployment of new entities.</p>
+            <div class="pattern-card reveal reveal-delay-2">
+                <h3>⚙️ Config-Driven DDL</h3>
+                <p>Metadata-driven table creation enabling rapid deployment of new entities across environments.</p>
                 <ul>
                     <li>Template-based DDL generation</li>
                     <li>Consistent naming conventions</li>
                     <li>Automatic service columns</li>
                     <li>Environment-aware deployment</li>
-                    <li>Change management support</li>
                 </ul>
             </div>
-            
-            <div class="pattern-card">
+            <div class="pattern-card reveal reveal-delay-3">
                 <h3>🔗 Multi-Source Orchestration</h3>
                 <p>Unified orchestration layer handling 25+ diverse data sources with consistent patterns.</p>
                 <ul>
                     <li>API, Database, File sources</li>
-                    <li>Parallel execution support</li>
-                    <li>Dependency management</li>
+                    <li>Parallel execution & dependency mgmt</li>
                     <li>Failure isolation</li>
                     <li>Automatic retry logic</li>
                 </ul>
             </div>
         </div>
     </section>
-    
-    <!-- Data Sources Section -->
-    <section class="section">
-        <div class="section-header">
+
+    <div class="section-divider"></div>
+
+    <!-- Integrations -->
+    <section class="section" id="integrations">
+        <div class="section-header reveal">
             <div class="section-label">Integrations</div>
-            <h2 class="section-title">25+ Data Sources Connected</h2>
-            <p class="section-description">Unified data from across the enterprise into a single source of truth</p>
+            <h2 class="section-title">25+ Data Sources Unified</h2>
+            <p class="section-description">Enterprise-wide data consolidated into a single source of truth.</p>
         </div>
-        
-        <div class="integrations-grid">
-            <div class="integration-item">
-                <div class="integration-icon">☁️</div>
-                <div>Salesforce</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📋</div>
-                <div>JIRA</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">🎫</div>
-                <div>Zendesk</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">👥</div>
-                <div>Dayforce</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">🗄️</div>
-                <div>DynamoDB</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📊</div>
-                <div>Qualtrics</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📞</div>
-                <div>GONG</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📁</div>
-                <div>Google Drive</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📈</div>
-                <div>BigQuery</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📧</div>
-                <div>Outreach</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">🎯</div>
-                <div>Culture Amp</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📦</div>
-                <div>AWS S3</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">⏰</div>
-                <div>Jira Tempo</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📝</div>
-                <div>Kantata</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">👤</div>
-                <div>Lever</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">🚪</div>
-                <div>Kisi</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📊</div>
-                <div>Freshsuccess</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">🔄</div>
-                <div>HubSpot</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📢</div>
-                <div>LinkedIn Ads</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">🔍</div>
-                <div>Google Ads</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">🅱️</div>
-                <div>Bing Ads</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">🌐</div>
-                <div>Google Search Console</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">📈</div>
-                <div>Google Analytics</div>
-            </div>
-            <div class="integration-item">
-                <div class="integration-icon">💱</div>
-                <div>Exchange Rates</div>
-            </div>
+
+        <div class="integrations-grid reveal">
+            <div class="integration-item"><span class="integration-icon">☁️</span> Salesforce</div>
+            <div class="integration-item"><span class="integration-icon">📋</span> JIRA</div>
+            <div class="integration-item"><span class="integration-icon">🎫</span> Zendesk</div>
+            <div class="integration-item"><span class="integration-icon">👥</span> Dayforce</div>
+            <div class="integration-item"><span class="integration-icon">🗄️</span> DynamoDB</div>
+            <div class="integration-item"><span class="integration-icon">📊</span> Qualtrics</div>
+            <div class="integration-item"><span class="integration-icon">📞</span> GONG</div>
+            <div class="integration-item"><span class="integration-icon">📁</span> Google Drive</div>
+            <div class="integration-item"><span class="integration-icon">📈</span> BigQuery</div>
+            <div class="integration-item"><span class="integration-icon">📧</span> Outreach</div>
+            <div class="integration-item"><span class="integration-icon">🎯</span> Culture Amp</div>
+            <div class="integration-item"><span class="integration-icon">📦</span> AWS S3</div>
+            <div class="integration-item"><span class="integration-icon">⏰</span> Jira Tempo</div>
+            <div class="integration-item"><span class="integration-icon">📝</span> Kantata</div>
+            <div class="integration-item"><span class="integration-icon">👤</span> Lever</div>
+            <div class="integration-item"><span class="integration-icon">🚪</span> Kisi</div>
+            <div class="integration-item"><span class="integration-icon">📊</span> Freshsuccess</div>
+            <div class="integration-item"><span class="integration-icon">🔄</span> HubSpot</div>
+            <div class="integration-item"><span class="integration-icon">📢</span> LinkedIn Ads</div>
+            <div class="integration-item"><span class="integration-icon">🔍</span> Google Ads</div>
+            <div class="integration-item"><span class="integration-icon">🅱️</span> Bing Ads</div>
+            <div class="integration-item"><span class="integration-icon">🌐</span> Search Console</div>
+            <div class="integration-item"><span class="integration-icon">📈</span> Google Analytics</div>
+            <div class="integration-item"><span class="integration-icon">💱</span> Exchange Rates</div>
         </div>
     </section>
-    
-    <!-- Journey Section -->
+
+    <div class="section-divider"></div>
+
+    <!-- Journey -->
     <section class="section" id="journey">
-        <div class="section-header">
+        <div class="section-header reveal">
             <div class="section-label">Evolution</div>
             <h2 class="section-title">Platform Growth Journey</h2>
-            <p class="section-description">From initial setup to enterprise-scale data platform</p>
+            <p class="section-description">From initial setup to enterprise-scale data platform, built incrementally over 4+ years.</p>
         </div>
-        
+
         <div class="timeline">
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <div class="timeline-year">2021</div>
                 <div class="timeline-content">
                     <h4>🏗️ Foundation</h4>
-                    <p>Joined Global SaaS/EdTech company. Established Snowflake infrastructure, designed medallion architecture, implemented core extraction patterns for Salesforce and JIRA.</p>
+                    <p>Joined the company. Established Snowflake infrastructure, designed medallion architecture, implemented core extraction patterns for Salesforce and JIRA.</p>
                 </div>
             </div>
-            
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <div class="timeline-year">2022</div>
                 <div class="timeline-content">
                     <h4>📈 Scale Up</h4>
-                    <p>Expanded to 120+ data flows, introduced Process Container framework, achieved 60K+ annual pipeline executions.</p>
+                    <p>Expanded to 120+ data flows. Introduced Process Container framework. Achieved 60K+ annual pipeline executions.</p>
                 </div>
             </div>
-            
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <div class="timeline-year">2023</div>
                 <div class="timeline-content">
                     <h4>🔗 Integration Expansion</h4>
                     <p>Added DynamoDB, Outreach, HR systems. Implemented hard deletion tracking. Launched data sharing with OUTBOUND schemas.</p>
                 </div>
             </div>
-            
-            <div class="timeline-item">
+            <div class="timeline-item reveal">
                 <div class="timeline-year">2024</div>
                 <div class="timeline-content">
                     <h4>🛠️ Modernization</h4>
                     <p>Integrated dbt for transformation layer. Implemented CI/CD pipelines. Expanded to 442K+ annual executions.</p>
                 </div>
             </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-year">2025-26</div>
+            <div class="timeline-item reveal">
+                <div class="timeline-year">2025–26</div>
                 <div class="timeline-content">
                     <h4>🚀 Enterprise Scale</h4>
-                    <p>Platform maturity achieved: 25+ data sources, 8B+ rows, 822K+ annual executions. Added GONG, Semantic Layer, advanced analytics capabilities. Platform now supports company-wide decision making.</p>
+                    <p>Platform maturity: 25+ sources, 8B+ rows, 822K+ executions/year. Added GONG, Semantic Layer, and advanced analytics. Platform now supports company-wide decision making.</p>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Skills Section -->
+
+    <div class="section-divider"></div>
+
+    <!-- Skills -->
     <section class="section">
-        <div class="section-header">
+        <div class="section-header reveal">
             <div class="section-label">Core Competencies</div>
-            <h2 class="section-title">Technical Skills Demonstrated</h2>
+            <h2 class="section-title">Technical Skills</h2>
         </div>
-        
-        <div class="impact-grid">
-            <div class="impact-card">
-                <div class="impact-card-icon">🏛️</div>
-                <div class="impact-card-value" style="font-size: 1.5em;">Data Architecture</div>
-                <div class="impact-card-label">Medallion pattern, dimensional modeling, data vault concepts</div>
+
+        <div class="skills-grid reveal">
+            <div class="skill-card">
+                <div class="skill-card-icon">🏛️</div>
+                <h4>Data Architecture</h4>
+                <p>Medallion pattern, dimensional modeling, data vault concepts</p>
             </div>
-            <div class="impact-card">
-                <div class="impact-card-icon">⚙️</div>
-                <div class="impact-card-value" style="font-size: 1.5em;">ETL/ELT Design</div>
-                <div class="impact-card-label">Incremental loads, CDC, full refresh, hybrid patterns</div>
+            <div class="skill-card">
+                <div class="skill-card-icon">⚙️</div>
+                <h4>ETL/ELT Design</h4>
+                <p>Incremental loads, CDC, full refresh, hybrid patterns</p>
             </div>
-            <div class="impact-card">
-                <div class="impact-card-icon">🔌</div>
-                <div class="impact-card-value" style="font-size: 1.5em;">API Integration</div>
-                <div class="impact-card-label">REST, pagination, rate limiting, error handling</div>
+            <div class="skill-card">
+                <div class="skill-card-icon">🔌</div>
+                <h4>API Integration</h4>
+                <p>REST, pagination, rate limiting, error handling</p>
             </div>
-            <div class="impact-card">
-                <div class="impact-card-icon">📊</div>
-                <div class="impact-card-value" style="font-size: 1.5em;">Data Governance</div>
-                <div class="impact-card-label">Lineage, quality checks, metadata management</div>
+            <div class="skill-card">
+                <div class="skill-card-icon">📊</div>
+                <h4>Data Governance</h4>
+                <p>Lineage, quality checks, metadata management</p>
             </div>
-            <div class="impact-card">
-                <div class="impact-card-icon">⚡</div>
-                <div class="impact-card-value" style="font-size: 1.5em;">Performance</div>
-                <div class="impact-card-label">Query optimization, partitioning, clustering</div>
+            <div class="skill-card">
+                <div class="skill-card-icon">⚡</div>
+                <h4>Performance</h4>
+                <p>Query optimization, partitioning, clustering</p>
             </div>
-            <div class="impact-card">
-                <div class="impact-card-icon">🔄</div>
-                <div class="impact-card-value" style="font-size: 1.5em;">DevOps/MLOps</div>
-                <div class="impact-card-label">CI/CD, version control, environment management</div>
+            <div class="skill-card">
+                <div class="skill-card-icon">🔄</div>
+                <h4>DevOps / MLOps</h4>
+                <p>CI/CD, version control, environment management</p>
             </div>
         </div>
     </section>
-    
-    <!-- CTA Section -->
+
+    <!-- CTA -->
     <section class="section" id="contact">
-        <div class="cta-section">
+        <div class="cta-section reveal">
             <h2>Let's Build Something Great</h2>
-            <p>Looking for a data engineer who can deliver enterprise-scale results? Let's connect and discuss how I can help transform your data infrastructure.</p>
+            <p>Looking for a data engineer who delivers enterprise-scale results? Let's connect and discuss how I can transform your data infrastructure.</p>
             <div class="cta-buttons">
                 <a href="mailto:leonardo.pettarin@gmail.com" class="cta-btn cta-btn-primary">📧 Contact Me</a>
                 <a href="https://www.linkedin.com/in/leonardo-reffosco-67404331/" target="_blank" class="cta-btn cta-btn-secondary">💼 LinkedIn</a>
             </div>
         </div>
     </section>
-    
+
     <!-- Footer -->
     <footer class="footer">
-        <p>📊 <strong>Leonardo Reffosco</strong> | Senior Data Engineer</p>
-        <p style="margin-top: 8px; font-size: 0.9em;">📍 Verona, Italy</p>
-        <p style="margin-top: 8px; font-size: 0.9em;">📧 leonardo.pettarin@gmail.com</p>
-        <p style="margin-top: 15px;">
-            <a href="https://www.linkedin.com/in/leonardo-reffosco-67404331/" target="_blank" style="color: var(--primary); text-decoration: none;">LinkedIn Profile →</a>
-        </p>
-        <p style="margin-top: 20px; font-size: 0.8em; color: var(--gray);">💡</p>
+        <div class="footer-name">Leonardo Reffosco</div>
+        <div class="footer-info">Senior Data Engineer · Verona, Italy</div>
+        <div class="footer-links">
+            <a href="mailto:leonardo.pettarin@gmail.com">leonardo.pettarin@gmail.com</a>
+            <a href="https://www.linkedin.com/in/leonardo-reffosco-67404331/" target="_blank">LinkedIn →</a>
+        </div>
     </footer>
-    
-    <!-- Mobile Navigation Script -->
+
     <script>
-        const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
-        
-        navToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-                document.body.style.overflow = '';
+        // ─── Scroll Reveal ───
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ─── Nav scroll effect ───
+        const nav = document.getElementById('nav');
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        }, { passive: true });
+
+        // ─── Close mobile nav on link click ───
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('open');
             });
         });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-                navToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
+
+        // ─── Counter Animation ───
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.target);
+                    const duration = 1800;
+                    const start = performance.now();
+
+                    const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+                    function update(now) {
+                        const elapsed = now - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const value = Math.round(ease(progress) * target);
+                        el.textContent = value >= 1000 ? value.toLocaleString('en-US') : value;
+                        if (progress < 1) requestAnimationFrame(update);
+                    }
+                    requestAnimationFrame(update);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
     </script>
 </body>
 </html>
